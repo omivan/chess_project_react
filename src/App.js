@@ -12,7 +12,7 @@ function App() {
             <div className="App">
                 <Helmet>
                     <title>My Custom Chess Game</title>
-                    <link rel="icon" href="../public/logo.ico" />
+                    <link rel="icon" href="Images/logo.ico" />
                 </Helmet>
 
                 <nav>
