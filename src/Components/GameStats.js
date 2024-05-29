@@ -1,8 +1,11 @@
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import React, { useState } from 'react';
+import { Bar, Line, Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
+import { ChessContainer } from "./styles";
 
 const StatsPage = () => {
+    const [chartType, setChartType] = useState('bar');
+
     const data = {
         labels: ['Wins', 'Losses', 'Draws'],
         datasets: [
@@ -16,18 +19,89 @@ const StatsPage = () => {
         ],
     };
 
+    const options = {
+        maintainAspectRatio: false,
+    };
+
+    const [wins, losses, draws] = data.datasets[0].data;
+
+    const containerStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px',
+        backgroundColor: '#f0f2f5',
+    };
+
+    const cardStyle = {
+        backgroundColor: '#fff',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+        padding: '20px',
+        margin: '20px',
+        textAlign: 'center',
+        width: '300px',
+    };
+
+    const chartContainerStyle = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+    };
+
+    const chartStyle = {
+        backgroundColor: '#fff',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+        padding: '20px',
+        margin: '20px',
+        width: '600px',
+        height: '400px',
+    };
+
+    const handleChartTypeChange = (event) => {
+        setChartType(event.target.value);
+    };
+
+    const renderChart = () => {
+        switch (chartType) {
+            case 'bar':
+                return <Bar data={data} options={options} height={400} />;
+            case 'line':
+                return <Line data={data} options={options} height={400} />;
+            case 'pie':
+                return <Pie data={data} options={options} height={400} />;
+            default:
+                return <Bar data={data} options={options} height={400} />;
+        }
+    };
+
     return (
-        <div>
-            <h2>Game Statistics</h2>
-            <div>
-                <p>Number of Wins: 10</p>
-                <p>Number of Losses: 5</p>
-                <p>Number of Draws: 3</p>
+        <ChessContainer>
+            <div style={containerStyle}>
+                <h2>Game Statistics</h2>
+                <div style={cardStyle}>
+                    <p><strong>Number of Wins:</strong> {wins}</p>
+                    <p><strong>Number of Losses:</strong> {losses}</p>
+                    <p><strong>Number of Draws:</strong> {draws}</p>
+                </div>
+                <div style={cardStyle}>
+                    <label htmlFor="chartType">Choose Chart Type:</label>
+                    <select id="chartType" value={chartType} onChange={handleChartTypeChange}>
+                        <option value="bar">Bar</option>
+                        <option value="line">Line</option>
+                        <option value="pie">Pie</option>
+                    </select>
+                </div>
+                <div style={chartContainerStyle}>
+                    <div style={chartStyle}>
+                        {renderChart()}
+                    </div>
+                </div>
             </div>
-            <div>
-                <Bar data={data} />
-            </div>
-        </div>
+        </ChessContainer>
     );
 };
 
