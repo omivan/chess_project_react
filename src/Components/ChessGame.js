@@ -1,6 +1,9 @@
 import React from 'react';
-import Chessboard from 'chessboardjsx';
 import { Chess } from 'chess.js';
+import ChessboardWrapper from './ChessboardWrapper';
+import MovesList from './MovesList';
+import PlayerInfo from './PlayerInfo';
+import { ChessContainer, BoardWrapper, GameOverMessage, ResignButton, PlayerSection } from './styles';
 
 class ChessGame extends React.Component {
     constructor(props) {
@@ -115,39 +118,31 @@ class ChessGame extends React.Component {
         }
     };
 
-    render() {
-        const movePairs = [];
-        for (let i = 0; i < this.state.moves.length; i += 2) {
-            movePairs.push([this.state.moves[i], this.state.moves[i + 1]]);
-        }
+    handleResign = () => {
+        this.setState({ gameOver: true });
+        alert('You resigned. Game over.');
+    };
 
+    render() {
         return (
-            <div style={{ display: 'flex' }}>
-                <div ref={this.boardRef} style={{ position: "relative" }}>
-                    <Chessboard
+            <ChessContainer>
+                <PlayerSection>
+                    <PlayerInfo name="Player 1" logo="player1_logo_url" />
+                    <PlayerInfo name="Player 2" logo="player2_logo_url" />
+                </PlayerSection>
+                <BoardWrapper>
+                    <ChessboardWrapper
+                        ref={this.boardRef}
                         position={this.state.fen}
                         onDrop={this.onDrop}
-                        width={800}
                         squareStyles={this.state.squareStyles}
                         onSquareClick={this.handleSquareClick}
                     />
-                    {this.state.gameOver && <p className="game-over">Game Over. Refresh to play again!</p>}
-                </div>
-                <div style={{ marginLeft: '20px', width: '200px', overflowY: 'auto', maxHeight: '800px' }}>
-                    <h3>Moves</h3>
-                    <table>
-                        <tbody>
-                        {movePairs.map((pair, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}.</td>
-                                <td>{pair[0]}</td>
-                                <td>{pair[1]}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                    <ResignButton onClick={this.handleResign}>Resign</ResignButton>
+                </BoardWrapper>
+                <MovesList moves={this.state.moves} />
+                {this.state.gameOver && <GameOverMessage>Game Over. Refresh to play again!</GameOverMessage>}
+            </ChessContainer>
         );
     }
 }
