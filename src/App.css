@@ -49,23 +49,27 @@ nav ul {
   padding: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 0;
 }
 
 nav ul li {
-  margin: 0 50px; /* Increase margin to add more space between items */
+  margin: 0 20px;
+  display: flex;
+  align-items: center;
 }
 
-nav ul li a {
+nav ul li a, .nav-button, .welcome-message {
   text-decoration: none;
   color: #555;
   font-size: 16px;
   padding: 10px 15px;
   border-radius: 20px;
-  transition: background-color 0.8s, color 0.5s; /* Slow down the transition */
+  transition: background-color 0.5s, color 0.5s;
+  cursor: pointer;
 }
 
-nav ul li a:hover {
+nav ul li a:hover, .nav-button:hover {
   background-color: #000;
   color: #fff;
 }
@@ -73,4 +77,16 @@ nav ul li a:hover {
 nav ul li a.active {
   background-color: #000;
   color: #fff;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+}
+
+.welcome-message {
+  margin-right: 10px;
+  font-weight: bold;
 }
