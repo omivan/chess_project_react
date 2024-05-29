@@ -17,7 +17,15 @@ class ChessGame extends React.Component {
         let tempChess = new Chess(this.state.chess.fen());
 
 
-        console.log(tempChess.moves())
+        // Get all legal moves from the source square
+        const legalMoves = tempChess.moves({ square: sourceSquare, verbose: true });
+
+        // Check if the intended move is in the list of legal moves
+        const isMoveLegal = legalMoves.some(move => move.to === targetSquare);
+
+        if (!isMoveLegal) {
+            return; // Exit if the move is not legal
+        }
 
         // Attempt to make a move
         let move = tempChess.move({
