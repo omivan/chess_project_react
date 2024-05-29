@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import {ChessContainer} from "../styles";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 // Styled components
 const LoginContainer = styled.div`
@@ -79,13 +79,20 @@ const LoginTitle = styled.h1`
 function Login({ onLogin }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        if (username.trim() === '' || password.trim() === '') {
+            setError('Username and password cannot be empty');
+            return;
+        }
         // Handle login logic
         console.log('Username:', username);
         console.log('Password:', password);
         onLogin(username); // Notify parent component about login
+        navigate('/'); // Redirect to home page
     };
 
     return (
@@ -93,6 +100,7 @@ function Login({ onLogin }) {
             <LoginContainer>
                 <LoginForm onSubmit={handleSubmit}>
                     <LoginTitle>Login</LoginTitle>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
                     <FormGroup>
                         <label>Username:</label>
                         <input
