@@ -69,8 +69,21 @@ class ChessGame extends React.Component {
             moves: [...prevState.moves, move.san]
         }), () => {
             if (tempChess.isGameOver()) {
-                this.setState({ gameOver: true });
-                alert('Game over');
+                let gameResult = '';
+                if (tempChess.isCheckmate()) {
+                    gameResult = tempChess.turn() === 'w' ? 'Black wins by checkmate' : 'White wins by checkmate';
+                } else if (tempChess.in_draw()) {
+                    gameResult = 'Draw';
+                } else if (tempChess.isStalemate()) {
+                    gameResult = 'Draw by stalemate';
+                } else if (tempChess.isThreefoldRepetition()) {
+                    gameResult = 'Draw by threefold repetition';
+                } else if (tempChess.isInsufficientMaterial()) {
+                    gameResult = 'Draw by insufficient material';
+                } else {
+                    gameResult = 'Game over';
+                }
+                this.setState({ gameOver: true, gameResult });
             } else {
                 this.makeRandomMove();
             }
@@ -80,11 +93,9 @@ class ChessGame extends React.Component {
     makeRandomMove = () => {
         let possibleMoves = this.state.chess.moves();
         if (possibleMoves.length === 0) {
-            this.setState({ gameOver: true });
-            alert('Game over');
+            this.setState({ gameOver: true, gameResult: 'Draw by stalemate' });
             return;
         }
-
         let randomIdx = Math.floor(Math.random() * possibleMoves.length);
         let move = this.state.chess.move(possibleMoves[randomIdx]);
         this.setState(prevState => ({
@@ -119,8 +130,7 @@ class ChessGame extends React.Component {
     };
 
     handleResign = () => {
-        this.setState({ gameOver: true });
-        alert('You resigned. Game over.');
+        this.setState({ gameOver: true, gameResult: 'You resigned. Game over.' });
     };
 
     render() {
@@ -143,7 +153,7 @@ class ChessGame extends React.Component {
                     <MovesList moves={this.state.moves} />
                     <ResignButton onClick={this.handleResign}>Resign</ResignButton>
                 </MovesSection>
-                {this.state.gameOver && <GameOverMessage>Game Over. Refresh to play again!</GameOverMessage>}
+                {this.state.gameOver && <GameOverMessage>{this.state.gameResult}. Refresh to play again!</GameOverMessage>}
             </ChessContainer>
         );
     }
