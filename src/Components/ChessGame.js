@@ -3,7 +3,7 @@ import { Chess } from 'chess.js';
 import ChessboardWrapper from './ChessboardWrapper';
 import MovesList from './MovesList';
 import PlayerInfo from './PlayerInfo';
-import { ChessContainer, BoardWrapper, GameOverMessage, ResignButton, PlayerSection, MovesSection } from './styles';
+import { ChessContainer, BoardWrapper, GameOverMessage, ResignButton, PlayerSection, MovesSection, PlayAgainButton, ReplayButton } from './styles';
 
 class ChessGame extends React.Component {
     constructor(props) {
@@ -12,9 +12,11 @@ class ChessGame extends React.Component {
             chess: new Chess(),
             fen: 'start',
             gameOver: false,
+            gameResult: '',
             squareStyles: {},
             selectedSquare: '',
-            moves: []
+            moves: [],
+            initialMoves: []  // Store initial moves
         };
 
         this.boardRef = React.createRef();
@@ -72,7 +74,7 @@ class ChessGame extends React.Component {
                 let gameResult = '';
                 if (tempChess.isCheckmate()) {
                     gameResult = tempChess.turn() === 'w' ? 'Black wins by checkmate' : 'White wins by checkmate';
-                } else if (tempChess.in_draw()) {
+                } else if (tempChess.isDraw()) {
                     gameResult = 'Draw';
                 } else if (tempChess.isStalemate()) {
                     gameResult = 'Draw by stalemate';
@@ -96,6 +98,7 @@ class ChessGame extends React.Component {
             this.setState({ gameOver: true, gameResult: 'Draw by stalemate' });
             return;
         }
+
         let randomIdx = Math.floor(Math.random() * possibleMoves.length);
         let move = this.state.chess.move(possibleMoves[randomIdx]);
         this.setState(prevState => ({
@@ -130,7 +133,47 @@ class ChessGame extends React.Component {
     };
 
     handleResign = () => {
-        this.setState({ gameOver: true, gameResult: 'You resigned. Game over.' });
+        this.setState({ gameOver: true, gameResult: 'You resigned. Game over.', initialMoves: this.state.moves });
+    };
+
+    handlePlayAgain = () => {
+        this.setState({
+            chess: new Chess(),
+            fen: 'start',
+            gameOver: false,
+            gameResult: '',
+            squareStyles: {},
+            selectedSquare: '',
+            moves: []
+        });
+    };
+
+    handleReplay = () => {
+        this.setState({
+            chess: new Chess(),
+            fen: 'start',
+            gameOver: false,
+            gameResult: '',
+            squareStyles: {},
+            selectedSquare: '',
+            moves: this.state.initialMoves
+        }, () => {
+            this.replayMoves(this.state.initialMoves);
+        });
+    };
+
+    replayMoves = (moves) => {
+        let tempChess = new Chess();
+        moves.forEach((move, index) => {
+            setTimeout(() => {
+                tempChess.move(move);
+                this.setState({
+                    chess: tempChess,
+                    fen: tempChess.fen(),
+                    moves: moves.slice(0, index + 1)
+                });
+            }, index * 500);  // Delay each move by 500ms for replay effect
+        });
     };
 
     render() {
@@ -153,7 +196,13 @@ class ChessGame extends React.Component {
                     <MovesList moves={this.state.moves} />
                     <ResignButton onClick={this.handleResign}>Resign</ResignButton>
                 </MovesSection>
-                {this.state.gameOver && <GameOverMessage>{this.state.gameResult}. Refresh to play again!</GameOverMessage>}
+                {this.state.gameOver && (
+                    <GameOverMessage>
+                        {this.state.gameResult}
+                        <PlayAgainButton onClick={this.handlePlayAgain}>Play Again</PlayAgainButton>
+                        <ReplayButton onClick={this.handleReplay}>Replay</ReplayButton>
+                    </GameOverMessage>
+                )}
             </ChessContainer>
         );
     }
