@@ -3,7 +3,7 @@ import { Chess } from 'chess.js';
 import ChessboardWrapper from './ChessboardWrapper';
 import MovesList from './MovesList';
 import PlayerInfo from './PlayerInfo';
-import { ChessContainer, BoardWrapper, GameOverMessage, ResignButton, PlayerSection } from './styles';
+import { ChessContainer, BoardWrapper, GameOverMessage, ResignButton, PlayerSection, MovesSection } from './styles';
 
 class ChessGame extends React.Component {
     constructor(props) {
@@ -127,8 +127,8 @@ class ChessGame extends React.Component {
         return (
             <ChessContainer>
                 <PlayerSection>
-                    <PlayerInfo name="Sigmoindusenko" logo="player1_logo_url" />
-                    <PlayerInfo name="Bot" logo="player2_logo_url" />
+                    <PlayerInfo name="Player 1" logo="player1_logo_url" />
+                    <PlayerInfo name="Player 2" logo="player2_logo_url" />
                 </PlayerSection>
                 <BoardWrapper>
                     <ChessboardWrapper
@@ -138,9 +138,11 @@ class ChessGame extends React.Component {
                         squareStyles={this.state.squareStyles}
                         onSquareClick={this.handleSquareClick}
                     />
-                    <ResignButton onClick={this.handleResign}>Resign</ResignButton>
                 </BoardWrapper>
-                <MovesList moves={this.state.moves} />
+                <MovesSection>
+                    <MovesList moves={this.state.moves} />
+                    <ResignButton onClick={this.handleResign}>Resign</ResignButton>
+                </MovesSection>
                 {this.state.gameOver && <GameOverMessage>Game Over. Refresh to play again!</GameOverMessage>}
             </ChessContainer>
         );
