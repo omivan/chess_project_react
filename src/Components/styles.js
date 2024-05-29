@@ -16,17 +16,33 @@ export const ChessContainer = styled.div`
     }
 `;
 
+export const PlayAgainButton = styled.button`
+    display: block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;  /* Green background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+        background-color: #45a049;  /* Darker green on hover */
+    }
+`;
+
+
+
 export const PlayerSection = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-right: 20px;
-    @media (max-width: 768px) {
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
+    justify-content: center;
+    margin-right: 5%;
+    margin-top: -2%;
+    height: 100%;
+    gap: 30vh;
 `;
-
 export const BoardWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -93,7 +109,7 @@ export const MoveCell = styled.td`
     padding-left: 10px;
 `;
 
-export const GameOverMessage = styled.p`
+export const GameOverMessage = styled.div`
     color: #fff;
     background-color: #333;
     font-weight: bold;
@@ -107,6 +123,24 @@ export const GameOverMessage = styled.p`
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);  /* Darker shadow */
     z-index: 1000;  /* Ensure it appears above other elements */
     text-align: center;  /* Center text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const ReplayButton = styled.button`
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #008CBA;  /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+        background-color: #007B9E;  /* Darker blue on hover */
+    }
 `;
 
 export const ResignButton = styled.button`
@@ -126,20 +160,22 @@ export const ResignButton = styled.button`
 export const PlayerContainer = styled.div`
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 4vh;
 `;
 
 export const PlayerLogo = styled.img`
-    width: 50px;
-    height: 50px;
+    width: 8vh;
+    height: 8vh;
     border-radius: 50%;
-    margin-right: 10px;
+    margin-right: 1%;
     object-fit: cover;
-    border: 2px solid #ccc;
+    border: 0.2rem solid #ccc;
 `;
 
+
+
 export const PlayerName = styled.div`
-    font-size: 18px;
+    font-size: 2rem;
     font-weight: bold;
     color: #333;
 `;
