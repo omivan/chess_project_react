@@ -8,6 +8,7 @@ import './App.css';
 import Login from "./Components/Login/Authorisation";
 import Weather from "./Components/Weather/Weather";
 import ImportGames from "./Components/ImportGames/ImportGames";
+import WeatherWidget from "./Components/Weather/WeatherWidget";
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                         <li>
                             <Link to="/import">Import Games</Link>
                         </li>
+
                         <li>
                             <Link to="/weather">Weather</Link>
                         </li>
@@ -44,6 +46,12 @@ function App() {
                     <Route path="/weather" element={<Weather />} />
                     <Route path="/login" element={<Login />} />
                 </Routes>
+
+
+                {/* Add WeatherWidget to the main App layout if needed */}
+                <div className="widget-container">
+                    <WeatherWidget />
+                </div>
             </div>
         </Router>
     );
