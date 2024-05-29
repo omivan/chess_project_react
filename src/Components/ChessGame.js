@@ -127,8 +127,8 @@ class ChessGame extends React.Component {
         return (
             <ChessContainer>
                 <PlayerSection>
-                    <PlayerInfo name="Player 1" logo="player1_logo_url" />
-                    <PlayerInfo name="Player 2" logo="player2_logo_url" />
+                    <PlayerInfo name="Sigmoindusenko" logo="player1_logo_url" />
+                    <PlayerInfo name="Bot" logo="player2_logo_url" />
                 </PlayerSection>
                 <BoardWrapper>
                     <ChessboardWrapper
