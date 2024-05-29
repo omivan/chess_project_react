@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
-import { ChessContainer } from "./styles";
+import { ChessContainer } from "../styles";
 
 const StatsPage = () => {
     const [chartType, setChartType] = useState('bar');
