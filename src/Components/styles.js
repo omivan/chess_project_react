@@ -66,6 +66,8 @@ export const MovesContainer = styled.div`
         max-height: 30vh;
     }
 `;
+
+
 export const MovesTable = styled.table`
     width: 100%;
     border-collapse: collapse;
@@ -92,15 +94,19 @@ export const MoveCell = styled.td`
 `;
 
 export const GameOverMessage = styled.p`
-    color: red;
+    color: #fff;
+    background-color: #333;
     font-weight: bold;
+    font-size: 24px;  /* Increase font size */
     position: absolute;
-    top: 10px;
-    left: 10px;
-    background: white;
-    padding: 5px;
-    border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);  /* Center the message */
+    padding: 20px 30px;  /* Increase padding */
+    border-radius: 8px;  /* Larger border radius */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);  /* Darker shadow */
+    z-index: 1000;  /* Ensure it appears above other elements */
+    text-align: center;  /* Center text */
 `;
 
 export const ResignButton = styled.button`
