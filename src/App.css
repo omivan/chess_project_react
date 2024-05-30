@@ -70,12 +70,12 @@ nav ul li a, .nav-button, .welcome-message {
 }
 
 nav ul li a:hover, .nav-button:hover {
-  background-color: #000;
+  background-color: #717171;
   color: #fff;
 }
 
 nav ul li a.active {
-  background-color: #000;
+  background-color: #717171;
   color: #fff;
 }
 
