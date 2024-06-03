@@ -39,9 +39,4 @@ export const CustomFileLabel = styled.label`
     }
 `;
 
-export const MainSection = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    gap: 20px; /* Adds space between metadata and move list */
-`;
+
