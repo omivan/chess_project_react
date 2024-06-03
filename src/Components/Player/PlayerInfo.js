@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlayerContainer, PlayerLogo, PlayerName } from './styles';
+import { PlayerContainer, PlayerLogo, PlayerName } from './PlayerStyles';
 
 const PlayerInfo = ({ name, logo }) => (
     <PlayerContainer>

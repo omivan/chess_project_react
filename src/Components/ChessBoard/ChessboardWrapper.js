@@ -1,6 +1,6 @@
 import React from 'react';
 import Chessboard from 'chessboardjsx';
-import { BoardContainer } from './styles';
+import { BoardContainer } from '../ChessBoard/ChessBoardStyles';
 
 const ChessboardWrapper = React.forwardRef((props, ref) => (
     <BoardContainer ref={ref}>

@@ -1,9 +1,12 @@
 import React from 'react';
 import { Chess } from 'chess.js';
-import ChessboardWrapper from './ChessboardWrapper';
-import MovesList from './MovesList';
-import PlayerInfo from './PlayerInfo';
-import { ChessContainer, BoardWrapper, GameOverMessage, ResignButton, PlayerSection, MovesSection, PlayAgainButton, ReplayButton } from './styles';
+import ChessboardWrapper from '../ChessBoard/ChessboardWrapper';
+import MovesList from '../Moves/MovesList';
+import PlayerInfo from '../Player/PlayerInfo';
+import {PlayerSection} from '../Player/PlayerStyles'
+import {BoardWrapper} from '../ChessBoard/ChessBoardStyles'
+import { ChessContainer, GameOverMessage, ResignButton, PlayAgainButton, ReplayButton } from '../ChessGame/ChessGameStyles';
+import {MovesSection} from '../Moves/MovesStyles'
 
 class ChessGame extends React.Component {
     constructor(props) {
@@ -83,7 +86,7 @@ class ChessGame extends React.Component {
                 } else if (tempChess.isInsufficientMaterial()) {
                     gameResult = 'Draw by insufficient material';
                 } else {
-                    gameResult = 'Game over';
+                    gameResult = 'Player over';
                 }
                 this.setState({ gameOver: true, gameResult });
             } else {
@@ -133,7 +136,7 @@ class ChessGame extends React.Component {
     };
 
     handleResign = () => {
-        this.setState({ gameOver: true, gameResult: 'You resigned. Game over.', initialMoves: this.state.moves });
+        this.setState({ gameOver: true, gameResult: 'You resigned. Player over.', initialMoves: this.state.moves });
     };
 
     handlePlayAgain = () => {
@@ -172,7 +175,7 @@ class ChessGame extends React.Component {
                     fen: tempChess.fen(),
                     moves: moves.slice(0, index + 1)
                 });
-            }, index * 500);  // Delay each move by 500ms for replay effect
+            }, index * 500);
         });
     };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MovesContainer, MovesTable, MovesRow, MoveNumber, MoveCell } from './styles';
+import { MovesContainer, MovesTable, MovesRow, MoveNumber, MoveCell } from './MovesStyles';
 
 const MovesList = ({ moves }) => {
     const movePairs = [];

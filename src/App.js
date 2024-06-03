@@ -1,15 +1,13 @@
-// src/App.js
 import React, {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import ChessGame from './Components/ChessGame';
+import ChessGame from './Components/ChessGame/ChessGame';
 import StatsPage from './Components/Stats/GameStats';
 import { Helmet } from 'react-helmet';
 import './App.css';
-import Login from "./Components/Login/Authorisation";
-import Weather from "./Components/Weather/Weather";
+import Login from "./Components/Login/Login";
+
 import ImportGames from "./Components/ImportGames/ImportGames";
-import WeatherWidget from "./Components/Weather/WeatherWidget";
-import Register from "./Components/Login/Registr";
+import Register from "./Components/Register /Registr";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -45,9 +43,6 @@ function App() {
                             <Link to="/import">Import Games</Link>
                         </li>
                         <li>
-                            <Link to="/weather">Weather</Link>
-                        </li>
-                        <li>
                             {isLoggedIn ? (
                                 <>
                                     <span className="welcome-message">Welcome, {username}</span>
@@ -63,15 +58,10 @@ function App() {
                     <Route path="/" element={<ChessGame />} />
                     <Route path="/stats" element={<StatsPage />} />
                     <Route path="/import" element={<ImportGames />} />
-                    <Route path="/weather" element={<Weather />} />
                     <Route path="/login" element={<Login onLogin={handleLogin} />} />
                     <Route path="/register" element={<Register />} />
                 </Routes>
 
-                {/* Add WeatherWidget to the main App layout if needed */}
-                <div className="widget-container">
-                    <WeatherWidget />
-                </div>
             </div>
         </Router>
     );

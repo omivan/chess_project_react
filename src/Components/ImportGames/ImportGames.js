@@ -1,9 +1,10 @@
 // src/components/ImportGames.js
 import React, { useState } from 'react';
-import { ChessContainer, MovesSection } from '../styles';
+import { MovesSection } from '../Moves/MovesStyles';
+import { ChessContainer } from  '../ChessGame/ChessGameStyles'
 import FileInput from './FileInput';
 import ErrorMessage from './ErrorMessage';
-import MovesList from '../MovesList';
+import MovesList from '../Moves/MovesList';
 import parsePGN from './parsePGN';
 import GameMetadata from "./GameMetadata";
 import styled from "styled-components";

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
-import { ChessContainer } from "../styles";
+import { ChessContainer } from "../ChessGame/ChessGameStyles";
+import './GameStats.css';  // Importing the CSS file for styles
 
 const StatsPage = () => {
     const [chartType, setChartType] = useState('bar');
@@ -25,42 +26,6 @@ const StatsPage = () => {
 
     const [wins, losses, draws] = data.datasets[0].data;
 
-    const containerStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '20px',
-        backgroundColor: '#f0f2f5',
-    };
-
-    const cardStyle = {
-        backgroundColor: '#fff',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-        padding: '20px',
-        margin: '20px',
-        textAlign: 'center',
-        width: '300px',
-    };
-
-    const chartContainerStyle = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-    };
-
-    const chartStyle = {
-        backgroundColor: '#fff',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-        padding: '20px',
-        margin: '20px',
-        width: '600px',
-        height: '400px',
-    };
-
     const handleChartTypeChange = (event) => {
         setChartType(event.target.value);
     };
@@ -80,14 +45,14 @@ const StatsPage = () => {
 
     return (
         <ChessContainer>
-            <div style={containerStyle}>
+            <div className="container">
                 <h2>Game Statistics</h2>
-                <div style={cardStyle}>
+                <div className="card">
                     <p><strong>Number of Wins:</strong> {wins}</p>
                     <p><strong>Number of Losses:</strong> {losses}</p>
                     <p><strong>Number of Draws:</strong> {draws}</p>
                 </div>
-                <div style={cardStyle}>
+                <div className="card">
                     <label htmlFor="chartType">Choose Chart Type:</label>
                     <select id="chartType" value={chartType} onChange={handleChartTypeChange}>
                         <option value="bar">Bar</option>
@@ -95,8 +60,8 @@ const StatsPage = () => {
                         <option value="pie">Pie</option>
                     </select>
                 </div>
-                <div style={chartContainerStyle}>
-                    <div style={chartStyle}>
+                <div className="chartContainer">
+                    <div className="chart">
                         {renderChart()}
                     </div>
                 </div>
