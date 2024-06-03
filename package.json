@@ -2,15 +2,20 @@
   "name": "chess_project_react",
   "version": "0.1.0",
   "private": true,
-
   "scripts": {
     "start": "npm-run-all --parallel start-client start-server",
     "start-client": "cd client && npm start",
     "start-server": "cd server && nodemon server.js",
-    "install": "cd client && npm install",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "install": "npm-run-all install-client install-server",
+    "install-client": "cd client && npm install",
+    "install-server": "cd server && npm install",
+    "build-client": "cd client && npm run build",
+    "build": "npm run build-client",
+    "test-client": "cd client && npm run test",
+    "test": "npm run test-client",
+    "eject-client": "cd client && npm run eject",
+    "eject": "npm run eject-client",
+    "postinstall": "npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -29,5 +34,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.1"
   }
 }
