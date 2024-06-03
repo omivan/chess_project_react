@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { MovesSection } from '../Moves/MovesStyles';
 import { ChessContainer } from  '../ChessGame/ChessGameStyles'
 import FileInput from '../FileInput/FileInput';
-import ErrorMessage from './ErrorMessage';
+import SimpleErrorMessage from '../SimpleErrorMessage/SimpleErrorMessage';
 import MovesList from '../Moves/MovesList';
 import parsePGN from './parsePGN';
 import GameMetadata from "../GameMetadata/GameMetadata";
@@ -47,7 +47,7 @@ function ImportGames() {
             <div>
                 <h1>Import Games</h1>
                 <FileInput onFileImport={handleFileImport} />
-                <ErrorMessage message={error} />
+                <SimpleErrorMessage message={error} />
                 <div>
                     <h2>Imported Games</h2>
                     {importedGames.map((game, index) => (

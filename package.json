@@ -6,7 +6,7 @@
     "start": "npm-run-all --parallel start-client start-server",
     "start-client": "cd client && npm start",
     "start-server": "cd server && nodemon server.js",
-    "install": "npm-run-all install-client install-server",
+    "install": "npm run install-client && npm run install-server",
     "install-client": "cd client && npm install",
     "install-server": "cd server && npm install",
     "build-client": "cd client && npm run build",

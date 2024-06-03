@@ -1,7 +1,7 @@
 import React from 'react';
 
-function ErrorMessage({ message }) {
+function SimpleErrorMessage({ message }) {
     return message ? <p style={{ color: 'red' }}>{message}</p> : null;
 }
 
-export default ErrorMessage;
+export default SimpleErrorMessage;
