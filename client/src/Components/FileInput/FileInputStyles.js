@@ -1,18 +1,4 @@
-// src/styles/index.js
-import styled from 'styled-components';
-
-export const MetadataContainer = styled.div`
-    text-align: left;
-`;
-
-export const MetadataList = styled.ul`
-    list-style-type: none;
-    padding: 0;
-`;
-
-export const MetadataItem = styled.li`
-    margin: 5px 0;
-`;
+import styled from "styled-components";
 
 export const FileInputContainer = styled.div`
     display: flex;
@@ -38,5 +24,3 @@ export const CustomFileLabel = styled.label`
         transition: background-color 0.5s, color 0.5s;
     }
 `;
-
-

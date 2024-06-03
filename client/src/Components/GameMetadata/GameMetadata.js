@@ -1,6 +1,6 @@
 // src/components/GameMetadata.js
 import React from 'react';
-import { MetadataContainer, MetadataList, MetadataItem } from './ImportStyles';
+import { MetadataContainer, MetadataList, MetadataItem } from './GameMetadataStyles';
 
 const GameMetadata = ({ metadata }) => (
     <MetadataContainer>

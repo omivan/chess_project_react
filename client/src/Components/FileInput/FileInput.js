@@ -1,5 +1,5 @@
 import React from 'react';
-import {CustomFileInput, CustomFileLabel, FileInputContainer} from "./ImportStyles";
+import {CustomFileInput, CustomFileLabel, FileInputContainer} from "./FileInputStyles";
 
 function FileInput({ onFileImport }) {
     const handleImport = (event) => {

@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import { MovesSection } from '../Moves/MovesStyles';
 import { ChessContainer } from  '../ChessGame/ChessGameStyles'
-import FileInput from './FileInput';
+import FileInput from '../FileInput/FileInput';
 import ErrorMessage from './ErrorMessage';
 import MovesList from '../Moves/MovesList';
 import parsePGN from './parsePGN';
-import GameMetadata from "./GameMetadata";
+import GameMetadata from "../GameMetadata/GameMetadata";
 import styled from "styled-components";
 
 export const MainSection = styled.div`
