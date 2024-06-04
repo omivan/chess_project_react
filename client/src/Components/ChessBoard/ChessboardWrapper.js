@@ -10,6 +10,7 @@ const ChessboardWrapper = React.forwardRef((props, ref) => (
             width={700}
             squareStyles={props.squareStyles}
             onSquareClick={props.onSquareClick}
+            orientation={props.orientation}  // Adding orientation prop
         />
     </BoardContainer>
 ));
