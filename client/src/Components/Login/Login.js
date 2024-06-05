@@ -20,14 +20,13 @@ function Login({ onLogin }) {
                 },
                 body: JSON.stringify({ username, password })
             });
-            console.log(response)
+
 
             if (!response.ok) {
                 throw new Error('Login failed');
             }
 
             const data = await response.json();
-            console.log(data.token)
             localStorage.setItem('token', data.token);
             localStorage.setItem('username', username);
             onLogin(username);

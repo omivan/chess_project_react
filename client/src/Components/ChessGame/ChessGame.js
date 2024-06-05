@@ -41,7 +41,7 @@ class ChessGame extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
-        // console.log('Previous isLoggedIn:', prevProps.isLoggedIn, 'Current isLoggedIn:', this.props.isLoggedIn);
+
         if (this.props.isLoggedIn !== prevProps.isLoggedIn && !this.props.isLoggedIn) {
             this.resetGame();
         }
@@ -195,7 +195,6 @@ class ChessGame extends React.Component {
 
     submitGame = async (gameData) => {
 
-        // console.log('Submitting game:', gameData);
         const token = localStorage.getItem('token');
         if (!token) {
             console.error('No token found, not submitting game.');
@@ -215,8 +214,6 @@ class ChessGame extends React.Component {
                 throw new Error('Failed to submit game');
             }
 
-            const game = await response.json();
-            console.log('Game saved:', game);
         } catch (error) {
             console.error('Error saving game:', error);
         }
