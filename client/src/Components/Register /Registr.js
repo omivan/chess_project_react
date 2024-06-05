@@ -24,16 +24,22 @@ function Register() {
                 throw new Error('Registration failed');
             }
 
-            setMessage('User registered successfully'); // Set success message
-            setError(''); // Clear any previous errors
+            setMessage('User registered successfully');
+            setError('');
         } catch (error) {
             setError(error.message);
-            setMessage(''); // Clear any previous success messages
+            setMessage('');
         }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        if (!password || !repeatPassword) {
+            setError("Passwords cannot be empty");
+            return;
+        }
+
         if (password !== repeatPassword) {
             setError("Passwords do not match");
             return;
@@ -47,7 +53,7 @@ function Register() {
             <RegisterContainer>
                 <RegisterForm onSubmit={handleSubmit}>
                     <RegisterTitle>Register</RegisterTitle>
-                    {message && <p style={{ color: 'green' }}>{message}</p>} {"Registered successfully"}
+                    {message && <p style={{ color: 'green' }}>{message}</p>}
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                     <FormGroup>
                         <label>Username:</label>

@@ -13,5 +13,5 @@ app.use(express.json());
 app.use('/api/games', require('./routes/Games'));
 app.use('/api/users', require('./routes/User'));
 
-const PORT = process.env.SERVER_PORT || 5000;
+const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
