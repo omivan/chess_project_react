@@ -5,10 +5,10 @@ export const ChessContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    background: linear-gradient(to bottom right, #f0f0f0, #d0d0d0);
+    background: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
     height: 100vh;
     box-sizing: border-box;
     @media (max-width: 768px) {
@@ -22,13 +22,13 @@ export const PlayAgainButton = styled.button`
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #4CAF50;  /* Green background */
+    background-color: #4CAF50;  
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     &:hover {
-        background-color: #45a049;  /* Darker green on hover */
+        background-color: #45a049; 
     }
 `;
 
@@ -53,19 +53,6 @@ export const GameOverMessage = styled.div`
     justify-content: center;
 `;
 
-export const ReplayButton = styled.button`
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #008CBA;  /* Blue background */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    &:hover {
-        background-color: #007B9E;  /* Darker blue on hover */
-    }
-`;
 
 export const ResignButton = styled.button`
     background-color: red;
@@ -80,59 +67,3 @@ export const ResignButton = styled.button`
         background-color: darkred;
     }
 `;
-
-export const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  gap: 10px;
-`;
-
-// Styled button with basic styling
-export const ChoiceButton = styled.button`
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  background-color: #f0f0f0;
-  &:hover {
-    background-color: #e2e2e2;
-  }
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px blue;
-  }
-`;
-
-export const ColorChoiceSection = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px;
-  padding: 10px;
-`;
-
-// Define the button for choosing a color
-export const ColorChoiceButton = styled.button`
-  background-color: #4CAF50; /* Green background */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #45a049; /* Darker green variation */
-  }
-
-  &:focus {
-    outline: none; /* Removes the default focus outline */
-  }
-`;
-

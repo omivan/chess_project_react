@@ -5,8 +5,9 @@ import MovesList from '../Moves/MovesList';
 import PlayerInfo from '../Player/PlayerInfo';
 import {PlayerSection} from '../Player/PlayerStyles'
 import {BoardWrapper} from '../ChessBoard/ChessBoardStyles'
-import { ChessContainer, GameOverMessage, ResignButton, PlayAgainButton, ColorChoiceSection, ColorChoiceButton} from './ChessGameStyles';
+import { ChessContainer, GameOverMessage, ResignButton, PlayAgainButton} from './ChessGameStyles';
 import {MovesSection} from '../Moves/MovesStyles'
+import {CustomFileLabel}  from "../FileInput/FileInputStyles"
 
 class ChessGame extends React.Component {
     constructor(props) {
@@ -25,6 +26,25 @@ class ChessGame extends React.Component {
         };
 
         this.boardRef = React.createRef();
+    }
+    resetGame = () => {
+        this.setState({
+            chess: new Chess(),
+            fen: 'start',
+            gameOver: false,
+            gameResult: '',
+            squareStyles: {},
+            selectedSquare: '',
+            moves: [],
+            colorSelected: null, // Ensure the color choice is reset
+        });
+    };
+
+    componentDidUpdate(prevProps) {
+        // console.log('Previous isLoggedIn:', prevProps.isLoggedIn, 'Current isLoggedIn:', this.props.isLoggedIn);
+        if (this.props.isLoggedIn !== prevProps.isLoggedIn && !this.props.isLoggedIn) {
+            this.resetGame();
+        }
     }
 
     componentDidMount() {
@@ -90,7 +110,7 @@ class ChessGame extends React.Component {
                 } else {
                     gameResult = 'Player over';
                 }
-                this.setState({ gameOver: true, gameResult });
+                this.setState({ gameResult }, this.handleGameOver);
             } else {
                 this.makeRandomMove();
             }
@@ -145,7 +165,60 @@ class ChessGame extends React.Component {
             } else {
                 gameResult = 'Game over';
             }
-            this.setState({ gameOver: true, gameResult });
+            this.setState({ gameResult }, this.handleGameOver);
+        }
+    };
+
+    handleGameOver = () => {
+
+        let numericalResult;
+        if (this.state.gameResult.includes("White wins")) {
+            numericalResult = 1;
+        } else if (this.state.gameResult.includes("Black wins")) {
+            numericalResult = 0;
+        } else if (this.state.gameResult.includes("You resigned")) {
+            numericalResult = this.state.orientation === "white" ? 0 : 1;
+        } else {
+            numericalResult = 0.5;
+        }
+
+        const gameData = {
+            details: "Regular game",
+            result: numericalResult,  // Updated to use the numerical result
+            moves: this.state.moves,
+            color: this.state.orientation
+        };
+
+        this.submitGame(gameData);
+        this.setState({ gameOver: true });
+    };
+
+    submitGame = async (gameData) => {
+
+        // console.log('Submitting game:', gameData);
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('No token found, not submitting game.');
+            return;  // Exit the function if no token is found
+        }
+        try {
+            const response = await fetch('http://localhost:5000/api/games', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `${token}`
+                },
+                body: JSON.stringify(gameData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to submit game');
+            }
+
+            const game = await response.json();
+            console.log('Game saved:', game);
+        } catch (error) {
+            console.error('Error saving game:', error);
         }
     };
 
@@ -173,7 +246,11 @@ class ChessGame extends React.Component {
     };
 
     handleResign = () => {
-        this.setState({ gameOver: true, gameResult: 'You resigned. Player over.', initialMoves: this.state.moves });
+        this.setState({
+            gameOver: true,
+            gameResult: 'You resigned. Player over.',
+            initialMoves: this.state.moves
+        }, this.handleGameOver);
     };
     handlePlayAgain = () => {
         this.setState({
@@ -188,15 +265,16 @@ class ChessGame extends React.Component {
         });
     };
 
+
     handleColorSelection = (color) => {
         this.setState({
             colorSelected: color,
-            chess: new Chess(),  // Reset or initialize the chess board
-            orientation: color === 'black' ? 'black' : 'white'  // Set board orientation based on color selection
+            chess: new Chess(),
+            orientation: color === 'black' ? 'black' : 'white'
         }, () => {
             if (color === 'black') {
                 setTimeout(() => {
-                    this.makeRandomMove();  // Make the AI's first move if the player is black
+                    this.makeRandomMove();
                 }, 500);
             }
         });
@@ -205,16 +283,18 @@ class ChessGame extends React.Component {
     renderColorChoice() {
         if (this.state.colorSelected === null) {
             return (
-                <ColorChoiceSection>
-                    <ColorChoiceButton onClick={() => this.handleColorSelection('white')}>Play as White</ColorChoiceButton>
-                    <ColorChoiceButton onClick={() => this.handleColorSelection('black')}>Play as Black</ColorChoiceButton>
-                </ColorChoiceSection>
+                <>
+                    <CustomFileLabel onClick={() => this.handleColorSelection('white')}>Play as White</CustomFileLabel>
+                    <CustomFileLabel onClick={() => this.handleColorSelection('black')}>Play as Black</CustomFileLabel>
+                </>
+
             );
         }
         return null;
     }
 
     render() {
+        const username = this.props.username;
         return (
             <ChessContainer>
                 {this.renderColorChoice()}
@@ -222,8 +302,9 @@ class ChessGame extends React.Component {
                     <>
                         <PlayerSection>
                             <PlayerInfo name="Bot" logo="Images/terminator.jpg" />
-                            <PlayerInfo name="Sigmoindusenko" logo="Images/sigmoindus.ico" />
+                            <PlayerInfo name={username} logo="Images/sigmoindus.ico" />
                         </PlayerSection>
+
                         <BoardWrapper>
                             <ChessboardWrapper
                                 ref={this.boardRef}

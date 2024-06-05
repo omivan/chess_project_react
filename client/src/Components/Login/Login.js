@@ -11,17 +11,40 @@ function Login({ onLogin }) {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    const loginUser = async (username, password) => {
+        try {
+            const response = await fetch('http://localhost:5000/api/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+            console.log(response)
+
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+
+            const data = await response.json();
+            console.log(data.token)
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('username', username);
+            onLogin(username);
+            navigate('/');
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         if (username.trim() === '' || password.trim() === '') {
             setError('Username and password cannot be empty');
             return;
         }
-        // Handle login logic
-        console.log('Username:', username);
-        console.log('Password:', password);
-        onLogin(username); // Notify parent component about login
-        navigate('/'); // Redirect to home page
+
+        loginUser(username, password);
     };
 
     return (

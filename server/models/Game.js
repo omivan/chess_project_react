@@ -9,7 +9,19 @@ const GameSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    result: String
+    result: {
+        type: Number,  // Now expecting a number
+        required: true
+    },
+    moves: {
+        type: [String],  // Array of strings
+        required: true
+    },
+    color: {
+        type: String,
+        enum: ['white', 'black'],  // Only allow 'white' or 'black'
+        required: true
+    }
 });
 
 module.exports = mongoose.model('Game', GameSchema);

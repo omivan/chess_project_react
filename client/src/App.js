@@ -5,29 +5,29 @@ import StatsPage from './Components/Stats/GameStats';
 import { Helmet } from 'react-helmet';
 import './App.css';
 import Login from "./Components/Login/Login";
-
 import ImportGames from "./Components/ImportGames/ImportGames";
 import Register from "./Components/Register /Registr";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [username, setUsername] = useState('');
-
+    const [username, setUsername] = useState('GuestUser');
+    console.warn = () => {};
+    console.error = () => {};
     const handleLogin = (username) => {
         setIsLoggedIn(true);
         setUsername(username);
     };
 
     const handleLogout = () => {
+        setUsername('GuestUser');
+        localStorage.removeItem('token');
         setIsLoggedIn(false);
-        setUsername('');
     };
-
     return (
         <Router>
             <div className="App">
                 <Helmet>
-                    <title>My Custom Chess Game</title>
+                    <title>Chess Game</title>
                     <link rel="icon" href="Images/logo.ico" />
                 </Helmet>
 
@@ -36,9 +36,11 @@ function App() {
                         <li>
                             <Link to="/">Home</Link>
                         </li>
-                        <li>
-                            <Link to="/stats">Statistics</Link>
-                        </li>
+                        {isLoggedIn && (
+                            <li>
+                                <Link to="/stats">Statistics</Link>
+                            </li>
+                        )}
                         <li>
                             <Link to="/import">Import Games</Link>
                         </li>
@@ -55,7 +57,7 @@ function App() {
                     </ul>
                 </nav>
                 <Routes>
-                    <Route path="/" element={<ChessGame />} />
+                    <Route path="/" element={<ChessGame isLoggedIn={isLoggedIn} username={username} />} />
                     <Route path="/stats" element={<StatsPage />} />
                     <Route path="/import" element={<ImportGames />} />
                     <Route path="/login" element={<Login onLogin={handleLogin} />} />

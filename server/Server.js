@@ -4,13 +4,12 @@ const connectDB = require('./config/Db');
 const cors = require('cors');
 const app = express();
 
-// Connect to MongoDB
+
 connectDB();
 
 app.use(cors());
-app.use(express.json()); // Middleware for parsing JSON
+app.use(express.json());
 
-// Define routes
 app.use('/api/games', require('./routes/Games'));
 app.use('/api/users', require('./routes/User'));
 

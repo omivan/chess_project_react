@@ -8,6 +8,29 @@ function Register() {
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
     const [error, setError] = useState('');
+    const [message, setMessage] = useState(''); // New state for success message
+
+    const registerUser = async (username, email, password) => {
+        try {
+            const response = await fetch('http://localhost:5000/api/users/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, email, password })
+            });
+
+            if (!response.ok) {
+                throw new Error('Registration failed');
+            }
+
+            setMessage('User registered successfully'); // Set success message
+            setError(''); // Clear any previous errors
+        } catch (error) {
+            setError(error.message);
+            setMessage(''); // Clear any previous success messages
+        }
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -15,10 +38,8 @@ function Register() {
             setError("Passwords do not match");
             return;
         }
-        console.log('Username:', username);
-        console.log('Email:', email);
-        console.log('Password:', password);
-        setError('');
+
+        registerUser(username, email, password);
     };
 
     return (
@@ -26,6 +47,7 @@ function Register() {
             <RegisterContainer>
                 <RegisterForm onSubmit={handleSubmit}>
                     <RegisterTitle>Register</RegisterTitle>
+                    {message && <p style={{ color: 'green' }}>{message}</p>} {"Registered successfully"}
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                     <FormGroup>
                         <label>Username:</label>

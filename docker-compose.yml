@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   mongodb:
     image: mongo:latest
@@ -9,3 +10,36 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: 1234
     ports:
       - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: myserver
+    restart: unless-stopped
+    environment:
+      MONGO_URI: mongodb://admin:1234@mongodb:27017/
+      SERVER_PORT: 5000
+      JWT_SECRET: postavte_100_please_i_hochu_na_povishku
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb
+#    command: npm run start-server
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: myclient
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+#    command: npm run start-client
+
+volumes:
+  mongo-data:
